@@ -306,7 +306,7 @@ message ParamSpec {
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available layer-specific ID: 147 (last added: recurrent_param)
+// LayerParameter next available layer-specific ID: 148 (last added: bn_param)
 message LayerParameter {
   optional string name = 1; // the layer name
   optional string type = 2; // the layer type
@@ -403,6 +403,7 @@ message LayerParameter {
   optional ThresholdParameter threshold_param = 128;
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
+  optional BNParameter bn_param = 147;
 }
 
 // Message that stores parameters used to apply transformation
@@ -1399,3 +1400,13 @@ message PReLUParameter {
   // Whether or not slope parameters are shared across channels.
   optional bool channel_shared = 2 [default = false];
 }
+
+// Message that stores parameters used by BNLayer
+message BNParameter {
+    optional FillerParameter scale_filler = 1; // The filler for the scale
+    optional FillerParameter shift_filler = 2; // The filler for the shift
+    optional float var_eps = 3 [default = 1e-10]; // The epsilon added to variance
+    optional bool moving_average = 4 [default = true]; // whether or not using moving average for inference
+    optional float decay = 5 [default = 0.95]; // The decay factor for moving average
+}
+
